@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Short Film — Crew List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0c0c0e;
+    --bg-card:  #141416;
+    --bg-dept:  #191920;
+    --bg-input: #0f0f12;
+    --border:   rgba(255,255,255,0.07);
+    --border-md:rgba(255,255,255,0.12);
+    --border-lg:rgba(255,255,255,0.18);
+    --accent:   #5DCAA5;
+    --accent-dim:rgba(93,202,165,0.10);
+    --accent-glow:rgba(93,202,165,0.06);
+    --text:     #edeae4;
+    --muted:    #7a7874;
+    --hint:     #383634;
+    --red:      #e05252;
+    --radius:   10px;
+    --radius-sm:6px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(93,202,165,0.2);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .logo-icon svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .logo-text { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--text); letter-spacing: 0.02em; }
+  .logo-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .header-actions { display: flex; gap: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    cursor: pointer; border: 1px solid var(--border-md);
+    background: transparent; color: var(--muted);
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn:hover { color: var(--text); border-color: var(--border-lg); }
+  .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .btn-primary {
+    background: var(--accent-dim);
+    border-color: rgba(93,202,165,0.3);
+    color: var(--accent);
+  }
+  .btn-primary:hover { background: rgba(93,202,165,0.16); border-color: var(--accent); color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* ── FILM TITLE BANNER ── */
+  .film-banner {
+    text-align: center;
+    padding: 2rem 1rem 2rem;
+    margin-bottom: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    position: relative;
+    overflow: hidden;
+  }
+  .film-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .banner-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.2em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .banner-title {
+    font-size: 22px; font-weight: 300;
+    color: var(--text); letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .banner-sub { font-size: 11px; color: var(--muted); margin-top: 6px; letter-spacing: 0.03em; }
+
+  /* ── META CARDS ── */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 1.75rem;
+  }
+  .meta-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    transition: border-color 0.15s;
+  }
+  .meta-card:focus-within { border-color: rgba(93,202,165,0.35); }
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 5px;
+  }
+  .meta-input {
+    background: transparent; border: none;
+    color: var(--text); font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    width: 100%; outline: none;
+  }
+  .meta-input::placeholder { color: var(--hint); }
+
+  /* ── DEPT BLOCK ── */
+  .dept {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .dept-header {
+    display: flex; align-items: center; gap: 9px;
+    padding: 9px 14px;
+    background: var(--bg-dept);
+    border-bottom: 1px solid var(--border);
+  }
+  .dept-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(93,202,165,0.5);
+  }
+  .dept-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.16em;
+  }
+  .dept-count {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; color: var(--hint);
+  }
+
+  /* ── CREW ROW ── */
+  .crew-row {
+    display: grid;
+    grid-template-columns: 185px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .crew-row:last-child { border-bottom: none; }
+  .role-cell {
+    padding: 9px 14px;
+    font-size: 12px; color: var(--muted);
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .name-cell {
+    padding: 8px 12px;
+    background: var(--bg-input);
+    display: flex; align-items: center;
+  }
+  .name-input {
+    background: transparent; border: none;
+    color: var(--text); font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    width: 100%; outline: none;
+  }
+  .name-input::placeholder { color: var(--hint); font-style: italic; }
+  .name-input:focus { color: var(--text); }
+
+  .double-row {
+    display: grid;
+    grid-template-columns: 185px 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .double-row:last-child { border-bottom: none; }
+  .split-cell {
+    padding: 8px 12px;
+    background: var(--bg-input);
+    display: flex; align-items: center;
+    border-right: 1px solid var(--border);
+  }
+  .split-cell:last-child { border-right: none; }
+
+  /* ── REMOVABLE ROW ── */
+  .rem-row {
+    display: grid;
+    grid-template-columns: 185px 1fr 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .rem-row:last-child { border-bottom: none; }
+  .rem-cell {
+    background: var(--bg-input);
+    display: flex; align-items: center; justify-content: center;
+    border-left: 1px solid var(--border);
+  }
+  .rm-btn {
+    background: transparent; border: none; cursor: pointer;
+    color: var(--hint); padding: 6px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .rm-btn:hover { color: var(--red); background: rgba(224,82,82,0.08); }
+  .rm-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+  /* ── CAST ROWS ── */
+  .cast-header-row {
+    display: grid;
+    grid-template-columns: 155px 1fr 1fr 30px;
+    padding: 5px 14px;
+    background: var(--bg-dept);
+    border-bottom: 1px solid var(--border);
+  }
+  .cast-col-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; color: var(--muted); letter-spacing: 0.06em;
+  }
+  .cast-row {
+    display: grid;
+    grid-template-columns: 155px 1fr 1fr 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cast-row:last-child { border-bottom: none; }
+  .cast-select-cell {
+    padding: 8px 12px;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .cast-select {
+    background: transparent; border: none;
+    color: var(--text); font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    width: 100%; outline: none; cursor: pointer;
+    appearance: none;
+  }
+  .cast-select option { background: #1a1a1f; color: var(--text); }
+
+  /* ── CUSTOM ROW ── */
+  .custom-row {
+    display: grid;
+    grid-template-columns: 185px 1fr 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .custom-row:last-child { border-bottom: none; }
+  .pos-cell {
+    padding: 8px 12px;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+
+  /* ── ADD BUTTON ── */
+  .add-row-btn {
+    display: flex; align-items: center; gap: 7px;
+    width: 100%; padding: 9px 14px;
+    background: var(--bg-card); border: none;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    cursor: pointer; letter-spacing: 0.02em;
+    transition: color 0.15s, background 0.15s;
+  }
+  .add-row-btn:hover { color: var(--accent); background: var(--accent-glow); }
+  .add-row-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+
+  /* ── STANDALONE ADD CREW BUTTON ── */
+  .add-crew-btn {
+    display: flex; align-items: center; gap: 7px;
+    width: 100%; padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    cursor: pointer; letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .add-crew-btn:hover { color: var(--accent); border-color: rgba(93,202,165,0.3); }
+  .add-crew-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .app-header, .header-actions, .add-row-btn, .add-crew-btn, .rm-btn, .no-print { display: none !important; }
+    body { background: #0c0c0e !important; }
+    .main { padding: 0; }
+    .dept { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<header class="app-header">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polyline points="7 8 10 12 13 8 16 12"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">CREW LIST</div>
+      <div class="logo-sub">Student Short Film</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn" onclick="clearForm()">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6l-1 14H6L5 6M10 11v6M14 11v6M8 6V4h8v2"/></svg>
+      Clear
+    </button>
+    <button class="btn btn-primary" onclick="printSheet()">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save PDF
+    </button>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- BANNER -->
+  <div class="film-banner">
+    <div class="banner-eyebrow">&#9632; Jordan High School &nbsp;|&nbsp; Film Production</div>
+    <div class="banner-title">Student Short Film</div>
+    <div class="banner-sub">Complete your crew assignment below — print or save as PDF when done</div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-grid">
+    <div class="meta-card"><div class="meta-label">Film Title</div><input class="meta-input" id="meta-title" placeholder="Untitled" /></div>
+    <div class="meta-card"><div class="meta-label">Period / Class</div><input class="meta-input" id="meta-period" placeholder="e.g. Period 3" /></div>
+    <div class="meta-card"><div class="meta-label">Shoot Date(s)</div><input class="meta-input" id="meta-dates" placeholder="" /></div>
+    <div class="meta-card"><div class="meta-label">Genre</div><input class="meta-input" id="meta-genre" placeholder="e.g. Drama, Comedy" /></div>
+  </div>
+
+  <!-- DIRECTION -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Direction</span></div>
+    <div class="crew-row"><div class="role-cell">Director</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">Assistant Director</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+  </div>
+
+  <!-- WRITING -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Writing</span></div>
+    <div class="crew-row"><div class="role-cell">Screenwriter</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">Script Supervisor</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+  </div>
+
+  <!-- CAMERA -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Camera</span></div>
+    <div class="crew-row"><div class="role-cell">Director of Photography</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">Camera Operator</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">1st AC / Focus Puller</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">2nd AC</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+  </div>
+
+  <!-- LIGHTING & GRIP -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Lighting &amp; Grip</span></div>
+    <div class="crew-row"><div class="role-cell">Gaffer (Chief Lighting)</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="double-row">
+      <div class="role-cell">Grip</div>
+      <div class="split-cell"><input class="name-input" placeholder="name 1" /></div>
+      <div class="split-cell"><input class="name-input" placeholder="name 2" /></div>
+    </div>
+  </div>
+
+  <!-- SOUND -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Sound</span></div>
+    <div class="crew-row"><div class="role-cell">Sound Recordist</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="double-row">
+      <div class="role-cell">Boom Operator</div>
+      <div class="split-cell"><input class="name-input" placeholder="name 1" /></div>
+      <div class="split-cell"><input class="name-input" placeholder="name 2" /></div>
+    </div>
+  </div>
+
+  <!-- ART DEPARTMENT -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Art Department</span></div>
+    <div class="crew-row"><div class="role-cell">Production Designer</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="double-row">
+      <div class="role-cell">Set Decorator / Props</div>
+      <div class="split-cell"><input class="name-input" placeholder="name 1" /></div>
+      <div class="split-cell"><input class="name-input" placeholder="name 2" /></div>
+    </div>
+    <div class="crew-row"><div class="role-cell">Costume Designer</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="double-row">
+      <div class="role-cell">Hair &amp; Makeup</div>
+      <div class="split-cell"><input class="name-input" placeholder="name 1" /></div>
+      <div class="split-cell"><input class="name-input" placeholder="name 2" /></div>
+    </div>
+  </div>
+
+  <!-- PRODUCTION -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Production</span></div>
+    <div class="crew-row"><div class="role-cell">Producer</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div id="pa-list">
+      <div class="rem-row" id="pa-1">
+        <div class="role-cell">Production Assistant</div>
+        <div class="name-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="name" /></div>
+        <div class="rem-cell"><button class="rm-btn" onclick="removeEl('pa-1')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      </div>
+      <div class="rem-row" id="pa-2">
+        <div class="role-cell">Production Assistant</div>
+        <div class="name-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="name" /></div>
+        <div class="rem-cell"><button class="rm-btn" onclick="removeEl('pa-2')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      </div>
+      <div class="rem-row" id="pa-3">
+        <div class="role-cell">Production Assistant</div>
+        <div class="name-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="name" /></div>
+        <div class="rem-cell"><button class="rm-btn" onclick="removeEl('pa-3')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      </div>
+      <div class="rem-row" id="pa-4">
+        <div class="role-cell">Production Assistant</div>
+        <div class="name-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="name" /></div>
+        <div class="rem-cell"><button class="rm-btn" onclick="removeEl('pa-4')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST-PRODUCTION -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Post-Production</span></div>
+    <div class="crew-row"><div class="role-cell">Editor</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">Colorist</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">Music / Score</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+    <div class="crew-row"><div class="role-cell">Sound Designer</div><div class="name-cell"><input class="name-input" placeholder="name" /></div></div>
+  </div>
+
+  <!-- CUSTOM CREW -->
+  <div class="dept" id="custom-dept" style="display:none;">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Additional Crew</span></div>
+    <div id="custom-list"></div>
+  </div>
+  <button class="add-crew-btn" onclick="addCustom()">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add crew position
+  </button>
+
+  <!-- CAST -->
+  <div class="dept">
+    <div class="dept-header"><span class="dept-dot"></span><span class="dept-name">Cast</span></div>
+    <div class="cast-header-row">
+      <span class="cast-col-label">Role Type</span>
+      <span class="cast-col-label">Character Name</span>
+      <span class="cast-col-label">Actor Name</span>
+      <span></span>
+    </div>
+    <div id="cast-list">
+      <div class="cast-row" id="cast-1">
+        <div class="cast-select-cell"><select class="cast-select"><option value="">— select —</option><option>Lead</option><option>Supporting</option><option>Featured Extra</option><option>Extra / Background</option><option>Narrator</option><option>Voice Only</option></select></div>
+        <div class="split-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="character name" /></div>
+        <div class="split-cell" style="background:var(--bg-input);border-right:none;"><input class="name-input" placeholder="actor name" /></div>
+        <div class="rem-cell"><button class="rm-btn" onclick="removeEl('cast-1')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      </div>
+      <div class="cast-row" id="cast-2">
+        <div class="cast-select-cell"><select class="cast-select"><option value="">— select —</option><option>Lead</option><option>Supporting</option><option>Featured Extra</option><option>Extra / Background</option><option>Narrator</option><option>Voice Only</option></select></div>
+        <div class="split-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="character name" /></div>
+        <div class="split-cell" style="background:var(--bg-input);border-right:none;"><input class="name-input" placeholder="actor name" /></div>
+        <div class="rem-cell"><button class="rm-btn" onclick="removeEl('cast-2')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      </div>
+    </div>
+    <button class="add-row-btn" onclick="addCast()">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add character
+    </button>
+  </div>
+
+  <!-- BOTTOM PRINT -->
+  <div style="display:flex;justify-content:flex-end;margin-top:1.5rem;" class="no-print">
+    <button class="btn btn-primary" onclick="printSheet()" style="padding:10px 22px;font-size:13px;">
+      <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save as PDF
+    </button>
+  </div>
+
+</main>
+
+<script>
+  let castCount = 2, customCount = 0;
+
+  function removeEl(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+    if (id.startsWith('custom')) {
+      if (!document.getElementById('custom-list').children.length)
+        document.getElementById('custom-dept').style.display = 'none';
+    }
+  }
+
+  function makeCastRow(id) {
+    const d = document.createElement('div');
+    d.className = 'cast-row'; d.id = id;
+    d.innerHTML = `
+      <div class="cast-select-cell"><select class="cast-select"><option value="">— select —</option><option>Lead</option><option>Supporting</option><option>Featured Extra</option><option>Extra / Background</option><option>Narrator</option><option>Voice Only</option></select></div>
+      <div class="split-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="character name" /></div>
+      <div class="split-cell" style="background:var(--bg-input);border-right:none;"><input class="name-input" placeholder="actor name" /></div>
+      <div class="rem-cell"><button class="rm-btn" onclick="removeEl('${id}')"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`;
+    return d;
+  }
+
+  function addCast() {
+    castCount++;
+    document.getElementById('cast-list').appendChild(makeCastRow('cast-' + castCount));
+  }
+
+  function addCustom() {
+    customCount++;
+    const id = 'custom-' + customCount;
+    document.getElementById('custom-dept').style.display = 'block';
+    const d = document.createElement('div');
+    d.className = 'custom-row'; d.id = id;
+    d.innerHTML = `
+      <div class="pos-cell"><input class="name-input" placeholder="crew position" /></div>
+      <div class="name-cell" style="background:var(--bg-input);"><input class="name-input" placeholder="name" /></div>
+      <div class="rem-cell"><button class="rm-btn" onclick="removeEl('${id}')"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`;
+    document.getElementById('custom-list').appendChild(d);
+  }
+
+  function clearForm() {
+    if (!confirm('Clear all fields? This cannot be undone.')) return;
+    document.querySelectorAll('input.name-input, input.meta-input').forEach(i => i.value = '');
+    document.querySelectorAll('select.cast-select').forEach(s => s.selectedIndex = 0);
+  }
+
+  function printSheet() {
+    window.print();
+  }
+</script>
+</body>
+</html>
